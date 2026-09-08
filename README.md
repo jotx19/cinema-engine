@@ -45,6 +45,25 @@ On start, cinema-engine sends **all Mac audio output** (Stremio and everything e
 
 ## Install
 
+### Homebrew
+
+This project is not in homebrew-core. After this repo (including `Formula/cinema-engine.rb`) is on GitHub:
+
+```bash
+brew tap jotx19/cinema-engine https://github.com/jotx19/cinema-engine.git
+brew install cinema-engine
+brew install --cask blackhole-2ch
+```
+
+Update later with:
+
+```bash
+brew update
+brew upgrade cinema-engine
+```
+
+### From source
+
 ```bash
 git clone https://github.com/jotx19/cinema-engine.git
 cd cinema-engine
