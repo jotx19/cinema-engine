@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key>
+    <string>org.cinema-engine.cli</string>
+    <key>CFBundleName</key>
+    <string>cinema-engine</string>
+    <key>CFBundleVersion</key>
+    <string>1.0.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>cinema-engine captures system audio from the BlackHole virtual device so it can apply cinema DSP and play the result on your headphones.</string>
+    <key>NSAudioCaptureUsageDescription</key>
+    <string>cinema-engine captures system audio from the BlackHole virtual device so it can apply cinema DSP and play the result on your headphones.</string>
+</dict>
+</plist>

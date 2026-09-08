@@ -1,0 +1,2 @@
+# Keep this directory in git even without impulse-response WAV files.
+# cinema-engine loads front_left.wav / front_right.wav (or KEMAR H10e000a.wav) at runtime.
