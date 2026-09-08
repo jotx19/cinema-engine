@@ -1,68 +1,96 @@
 # cinema-engine
 
-macOS command-line tool that captures system audio from a virtual driver, runs a cinema/theatre DSP chain, and plays the result on headphones (for example AirPods Pro). There is no GUI.
+<p align="center">
+  Cinema sound for Stremio (or any other Mac audio output) — on your AirPods — from the terminal.<br>
+  <strong>MIT licensed.</strong> Free to use, copy, modify, and sell.
+</p>
 
-It exists because media players such as Stremio do not offer cinema-style spatial processing. Route the player into BlackHole, let cinema-engine process the stream, and listen on a real output device.
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow?style=flat" alt="License: MIT"></a>
+  <img src="https://img.shields.io/badge/macOS-000000?style=flat&logo=apple&logoColor=white" alt="macOS">
+  <img src="https://img.shields.io/badge/Swift-F05138?style=flat&logo=swift&logoColor=white" alt="Swift">
+  <img src="https://img.shields.io/badge/Terminal-4EAA25?style=flat&logo=gnubash&logoColor=white" alt="Terminal">
+  <img src="https://img.shields.io/badge/Core_Audio-0D96F6?style=flat&logo=apple&logoColor=white" alt="Core Audio">
+  <img src="https://img.shields.io/badge/Homebrew-optional-FBB040?style=flat&logo=homebrew&logoColor=black" alt="Homebrew optional">
+</p>
 
-Fully open-source (MIT). It uses only free tools: Swift, AVAudioEngine, BlackHole, and optional MIT KEMAR HRTF impulse responses. No paid Apple entitlements and no signed DriverKit extension.
+## What this is
 
-## Architecture
+**Stremio** (and any other Mac audio output: Safari, IINA, Music, a browser) just sends stereo to your headphones. **cinema-engine** sits in the middle and adds theatre-style sound: more bass, a wider image, voices that stay clear, a little room, and a “in front of you” spatial effect.
 
-```
-┌─────────┐     ┌──────────────┐     ┌──────────────────────────┐     ┌─────────────┐
-│ Stremio │ --> │ BlackHole 2ch│ --> │ cinema-engine (terminal) │ --> │ AirPods Pro │
-│ (or any │     │ (auto-routed)│     │ EQ → width → HRTF →      │     │ (or other   │
-│  player)│     │              │     │ reverb → bass → limiter  │     │  output)    │
-└─────────┘     └──────────────┘     └──────────────────────────┘     └─────────────┘
-```
+There is no app window. You run it in Terminal, play Stremio like usual, and listen on AirPods or speakers. When you quit, Mac sound goes back to normal.
 
-`cinema-engine start` points macOS system output at BlackHole by itself, then restores your previous output when you quit. You do not need to click Sound Settings.
+<p align="center">
+  <img src="docs/live-mixer.png" alt="cinema-engine live mixer in the terminal" width="720">
+</p>
 
-Live knobs live in `~/.cinema-engine/config.json`. A running `start` process watches that file and ramps DSP parameters without restarting the graph.
+## Prerequisites
 
-## Requirements
-
-- macOS 13+
+- macOS 13 or later
 - Your Mac password once (to install the BlackHole audio driver)
-- Click **Allow** if macOS asks for Microphone access
+- Terminal (or iTerm)
+- Click **Allow** if macOS asks for Microphone access (that is for BlackHole, not your hardware mic)
+- Optional: [Homebrew](https://brew.sh)
 
-Homebrew is optional. `./install.sh` downloads the BlackHole pkg directly if brew is missing. Xcode Command Line Tools are installed automatically if `swift` is not already present (one GUI prompt).
+Xcode Command Line Tools are installed automatically if `swift` is missing (one GUI prompt).
+
+## How it works
+
+On start, cinema-engine sends **all Mac audio output** (Stremio and everything else) into BlackHole, a virtual speaker. It reads that, processes it, and plays the result on your real headphones. On quit, the old output comes back.
+
+1. Play Stremio (or any other app with sound).
+2. That audio output goes into BlackHole.
+3. cinema-engine adds cinema processing (EQ, width, HRTF, room, bass, limiter).
+4. You hear it on AirPods or speakers.
 
 ## Install
 
 ```bash
-cd /path/to/audio-engine
+git clone https://github.com/jotx19/cinema-engine.git
+cd cinema-engine
 ./install.sh
 cinema-engine
 ```
 
-`cinema-engine` is the live session (like `npm run dev`). While it is running, system audio is processed. When you quit, audio is normal again.
+That builds the tool, puts `cinema-engine` on your PATH (`~/.local/bin`), and can install BlackHole.
 
-Keys:
+Build only:
 
-- **↑ / ↓** select bass, width, dialogue, or room
-- **← / →** change the selected level by 5
-- **[ / ]** change by 1
-- **1 / 2 / 3** theatre / reference / night presets
-- **q** or **ctrl-c** stop and restore normal audio
+```bash
+swift build
+.build/debug/cinema-engine start
+```
 
-From another terminal: `cinema-engine stop`
+## Use it
 
-Then just start it. Play Stremio (or anything). Allow Microphone access if macOS asks.
+1. Run `cinema-engine` (same as `start` or `dev`).
+2. Click **Allow** if macOS asks for Microphone.
+3. Play Stremio (or anything else).
+4. Mix with the keys below. Press **q** when you are done.
+
+| Key | What it does |
+| --- | --- |
+| ↑ ↓ | Pick bass, width, dialogue, or room |
+| ← → | Change that knob by 5 |
+| `[` `]` | Change that knob by 1 |
+| `1` `2` `3` | Theatre / reference / night presets |
+| `q` or Ctrl+C | Stop and put Mac audio back to normal |
 
 ## Commands
+
+Install BlackHole if needed and remember your headphones:
 
 ```bash
 cinema-engine setup
 ```
 
-Installs BlackHole if needed (pkg or Homebrew), writes config, and detects your headphones/speakers. No Sound Settings steps.
+Show every input and output the Mac can see:
 
 ```bash
 cinema-engine list-devices
 ```
 
-Lists CoreAudio input and output devices with name, UID, channel count, and sample rate.
+Start the live mixer (Stremio / any audio output → cinema sound → AirPods). These three do the same thing:
 
 ```bash
 cinema-engine
@@ -70,9 +98,7 @@ cinema-engine start
 cinema-engine dev
 ```
 
-Interactive mixer. Captures BlackHole, plays to your headphones/speakers, and switches system output until you quit. Arrow keys change levels.
-
-Optional overrides:
+Start options (headphones, skip HRTF, or a plain status line):
 
 ```bash
 cinema-engine start --output "AirPods Pro" --preset theatre
@@ -80,18 +106,7 @@ cinema-engine start --no-hrtf
 cinema-engine start --plain
 ```
 
-Starts the graph in the foreground until Ctrl+C (or `cinema-engine stop`). Signal path:
-
-1. Input from the chosen capture device (BlackHole)
-2. 3-band EQ (low shelf, dialogue presence, high shelf)
-3. Mid-side stereo widening with dialogue-band protection
-4. HRTF convolution (“in front, slightly above”)
-5. Small-hall reverb at a low wet mix
-6. Extra bass shelf
-7. Peak limiter
-8. Chosen output device
-
-Pass `--no-hrtf` to skip convolution. `--plain` uses a single status line instead of the mixer.
+Set a knob (0–100) or a preset:
 
 ```bash
 cinema-engine set bass 70
@@ -101,23 +116,16 @@ cinema-engine set room 40
 cinema-engine set preset night
 ```
 
-Writes `~/.cinema-engine/config.json`. Values are 0–100. The running engine hot-reloads and ramps changes over about 100 ms.
+Check the mix, or quit and restore normal audio:
 
 ```bash
 cinema-engine status
-```
-
-Prints whether the engine is active, the PID, routing, and current parameters (from `~/.cinema-engine/state.json`).
-
-```bash
 cinema-engine stop
 ```
 
-Stops the live session and restores the previous system output, so audio is normal again.
-
 ## Config
 
-`~/.cinema-engine/config.json`:
+Saved at `~/.cinema-engine/config.json`. If cinema-engine is already running, edits apply in about 100 ms.
 
 ```json
 {
@@ -133,19 +141,18 @@ Stops the live session and restores the previous system output, so audio is norm
 
 Presets: `theatre`, `reference`, `night`.
 
-## HRTF data
+## Extra: HRTF files
 
-Place MIT KEMAR (or compatible) impulse responses in `hrtf-data/` as WAV files:
+For a more realistic “front of the room” effect, put MIT KEMAR (or similar) WAVs in `hrtf-data/`:
 
-- `front_left.wav` / `front_right.wav` (preferred), or
-- `H10e000a.wav` (elevation +10°, azimuth 0° — in front, slightly above)
+- `front_left.wav` and `front_right.wav`, or
+- `H10e000a.wav` (10° up, looking forward)
 
-If no files are present, cinema-engine uses a short synthetic front IR so the node still runs. See `hrtf-data/README.md`.
+If those files are missing, a built-in short impulse is used. The KEMAR dataset is not included in this repo. See `hrtf-data/README.md`.
 
-## Latency
-
-The engine requests 256-frame hardware buffers (falls back to the device’s allowed range, typically 256–512). Custom DSP uses preallocated buffers and does not perform I/O on the audio thread. Total input-to-output delay is intended to stay under ~40 ms so picture and sound stay in sync.
+Delay is meant to stay under about 40 ms so picture and sound stay together.
 
 ## License
 
-MIT. BlackHole is MIT. MIT KEMAR HRTF data is a free academic dataset with its own terms; it is not redistributed here.
+[MIT](LICENSE) for this whole project: use, copy, modify, merge, publish, distribute, sublicense, and sell. Keep the copyright notice.
+
