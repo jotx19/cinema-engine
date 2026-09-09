@@ -7,6 +7,8 @@ import { MediaFill } from "@/components/media-fill"
 import { OpenTerminalButton } from "@/components/open-terminal-button"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteNav } from "@/components/site-nav"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { AppleIcon, HugeiconsFreeIcons, Lock, LockComputerFreeIcons, LockedIcon, LockOpen, LockSync01FreeIcons } from "@hugeicons/core-free-icons"
 
 export default function Home() {
   return (
@@ -30,8 +32,9 @@ export default function Home() {
         <div className="mx-auto w-full max-w-4xl">
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-12 sm:grid-rows-[220px_220px_220px]">
             <BentoCard className="h-[220px] sm:col-span-8 sm:row-start-1 sm:h-full">
-              <div className="relative z-[2] flex h-full items-center justify-center px-6">
-                <p className="text-3xl tracking-tight text-white sm:text-4xl">Cinema sound</p>
+              <div className="relative z-[2] font-try font-black flex h-full items-center justify-center px-6">
+                <p className="text-2xl tracking-tight inline-flex items-center md:gap-3 gap-2 text-white leading-none sm:text-4xl">Support <span><HugeiconsIcon icon={AppleIcon} size={30} strokeWidth={1.75} className="fill-current" />
+                </span> silicon</p>
               </div>
             </BentoCard>
 
@@ -57,11 +60,12 @@ export default function Home() {
 
             <BentoCard className="h-[220px] sm:col-span-4 sm:row-start-3 sm:h-full" delay={0.16}>
               <div className="relative z-[2] flex h-full flex-col justify-between p-4">
-                <p className="text-[11px] text-zinc-500">Latency</p>
-                <p className="bg-gradient-to-br from-violet-300 via-fuchsia-300 to-sky-300 bg-clip-text text-center text-5xl leading-none tracking-tight text-transparent sm:text-6xl">40ms
+                <p className="text-[12px] font-try font-black text-zinc-500">Least latency streaming</p>
+                <p className="bg-gradient-to-br font-try from-violet-300 via-fuchsia-300 to-sky-300 bg-clip-text text-center text-6xl leading-none tracking-tight text-transparent sm:text-6xl">40ms
                 </p>
-                <p className="self-end text-right text-sm leading-5 text-zinc-500">
+                <p className="self-end text-right inline-flex items-center gap-1 font-try text-sm leading-5 text-zinc-500">
                   Locked to picture
+                  <HugeiconsIcon icon={LockedIcon} size={16} strokeWidth={1.75} className="mt-0.5" />
                 </p>
               </div>
             </BentoCard>
