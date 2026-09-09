@@ -16,7 +16,7 @@ export default function Home() {
         <HeroSpatialLoops />
         <div className="relative z-10 flex justify-center px-4 pt-[18vh] sm:pt-[20vh]">
           <div id="install" className="flex w-full max-w-3xl flex-col items-center">
-            <h1 className="text-5xl tracking-tight text-white sm:text-7xl">Cinengine</h1>
+            <h1 className="text-5xl tracking-tight text-white sm:text-7xl">Cinema <span className="mask-linear-from-neutral-950 font-extralight text-6xl">X </span><span className="text-5xl tracking-tight text-white sm:text-6xl font-serif italic">Engine</span></h1>
             <p className="md:mt-5 md:mb-8 mt-2 mb-10 max-w-md text-center text-sm text-white/70 tracking-tight sm:text-base">
               Stream audio like a theatre, on your device.
             </p>
