@@ -6,3 +6,7 @@ xcuserdata/
 DerivedData/
 .env
 *.pid
+public/node_modules/
+public/.next/
+public/out/
+public/next-env.d.ts
