@@ -9,15 +9,7 @@ export function SiteFooter() {
           <Image src="/brand/logo.png" alt="" width={20} height={20} className="rounded-sm" />
           Cinema Engine
         </Link>
-        <div className="flex flex-wrap gap-5 text-sm text-zinc-500">
-          <a
-            href="https://github.com/jotx19/cinema-engine/releases"
-            className="hover:text-white"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Changelog
-          </a>
+        <div className="flex flex-wrap gap-5 text-sm text-white/40">
           <Link href="/terms" className="hover:text-white">
             Terms of use
           </Link>

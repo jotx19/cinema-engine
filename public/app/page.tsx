@@ -16,8 +16,8 @@ export default function Home() {
         <HeroSpatialLoops />
         <div className="relative z-10 flex justify-center px-4 pt-[18vh] sm:pt-[20vh]">
           <div id="install" className="flex w-full max-w-3xl flex-col items-center">
-            <h1 className="text-7xl tracking-tight text-white sm:text-7xl">Cinema Engine</h1>
-            <p className="mt-5 mb-8 max-w-md text-center text-sm leading-6 text-white/70 tracking-tight sm:text-base">
+            <h1 className="text-5xl tracking-tight text-white sm:text-7xl">Cinema Engine</h1>
+            <p className="md:mt-5 md:mb-8 mt-2 mb-10 max-w-md text-center text-sm text-white/70 tracking-tight sm:text-base">
               Stream audio like a theatre, on your device.
             </p>
             <InstallCommand />
@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative z-10 -mt-[280px] px-4 pb-20 sm:px-6 lg:-mt-[180px]">
+      <section className="relative z-10 -mt-[310px] px-4 pb-20 sm:px-6 lg:-mt-[180px]">
         <div className="mx-auto w-full max-w-4xl">
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-12 sm:grid-rows-[220px_220px_220px]">
             <BentoCard className="h-[220px] sm:col-span-8 sm:row-start-1 sm:h-full">

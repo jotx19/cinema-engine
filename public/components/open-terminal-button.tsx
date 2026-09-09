@@ -21,10 +21,12 @@ const buttonClass = "h-11 gap-2 rounded-xl px-5 text-sm"
 export function OpenTerminalButton() {
   return (
     <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+      <div className="hidden md:block">
       <Button type="button" onClick={downloadInstaller} className={buttonClass}>
         <HugeiconsIcon icon={ComputerTerminal01Icon} size={16} strokeWidth={1.75} />
         Install in Terminal
       </Button>
+      </div>
       <Button type="button" disabled className={buttonClass}>
         <HugeiconsIcon icon={AppleIcon} size={16} strokeWidth={1.75} className="fill-current" />
         Download for Mac
