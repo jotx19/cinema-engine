@@ -7,7 +7,7 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <Link href="/" className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white">
           <Image src="/brand/logo.png" alt="" width={20} height={20} className="rounded-sm" />
-          Cinema Engine
+          Cinengine
         </Link>
         <div className="flex flex-wrap gap-5 text-sm text-white/40">
           <Link href="/terms" className="hover:text-white">
