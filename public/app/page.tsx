@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative z-10 -mt-[310px] px-4 pb-20 sm:px-6 lg:-mt-[180px]">
+      <section className="relative z-10 -mt-[250px] px-4 pb-20 sm:px-6 lg:-mt-[180px]">
         <div className="mx-auto w-full max-w-4xl">
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-12 sm:grid-rows-[220px_220px_220px]">
             <BentoCard className="h-[220px] sm:col-span-8 sm:row-start-1 sm:h-full">
