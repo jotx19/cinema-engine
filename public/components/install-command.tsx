@@ -1,86 +1,51 @@
 "use client"
 
-import { Check, Copy } from "lucide-react"
+import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { Button } from "@/components/ui/button"
-import { brewInstall, curlInstall, sourceInstall } from "@/lib/commands"
-import { cn } from "@/lib/utils"
-
-const tabs = [
-  {
-    id: "curl",
-    label: "curl",
-    command: curlInstall,
-    highlight: "raw.githubusercontent.com/jotx19/cinema-engine/main/install.sh",
-  },
-  {
-    id: "brew",
-    label: "brew",
-    command: brewInstall,
-    highlight: "github.com/jotx19/cinema-engine",
-  },
-  {
-    id: "source",
-    label: "source",
-    command: sourceInstall,
-    highlight: "github.com/jotx19/cinema-engine.git",
-  },
-] as const
+import { curlInstall } from "@/lib/commands"
 
 export function InstallCommand() {
-  const [active, setActive] = useState<(typeof tabs)[number]["id"]>("curl")
   const [copied, setCopied] = useState(false)
-  const tab = tabs.find((item) => item.id === active) ?? tabs[0]
 
-  async function copy() {
-    await navigator.clipboard.writeText(tab.command)
+  async function copyInstall() {
+    await navigator.clipboard.writeText(curlInstall)
     setCopied(true)
     toast.success("Copied")
     window.setTimeout(() => setCopied(false), 1600)
   }
 
-  const start = tab.command.indexOf(tab.highlight)
-  const before = start >= 0 ? tab.command.slice(0, start) : tab.command
-  const after = start >= 0 ? tab.command.slice(start + tab.highlight.length) : ""
-
   return (
-    <div className="w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0d]">
-      <div className="flex items-center gap-6 border-b border-white/10 px-5">
-        {tabs.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            onClick={() => setActive(item.id)}
-            className={cn(
-              "relative py-3 text-sm transition-colors",
-              active === item.id ? "text-white" : "text-zinc-500 hover:text-zinc-300"
-            )}
-          >
-            {item.label}
-            {active === item.id ? (
-              <span className="absolute inset-x-0 -bottom-px h-px bg-white" />
-            ) : null}
-          </button>
-        ))}
+    <div className="flex w-full items-center gap-3 overflow-hidden rounded-[20px] border border-[#efefef] bg-white px-4 py-4">
+      <span className="shrink-0 select-none font-mono text-[13px] text-[#b0b0b0]">$</span>
+      <div className="min-w-0 flex-1 overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]">
+        <code className="block w-max max-w-none font-mono text-[13px] leading-6 whitespace-nowrap text-[#6f6f6f]">
+          <span className="text-[#111]">curl</span>{" "}
+          <span className="text-[#9a9a9a]">-fsSL</span>{" "}
+          <span className="text-[#111]">
+            https://raw.githubusercontent.com/jotx19/cinema-engine/main/install.sh
+          </span>{" "}
+          <span className="text-[#b0b0b0]">|</span> <span className="text-[#111]">bash</span>
+        </code>
       </div>
-      <div className="flex items-center gap-4 px-5 py-4">
-        <p className="min-w-0 flex-1 overflow-x-auto font-mono text-sm leading-6 whitespace-nowrap">
-          <span className="text-zinc-400">{before}</span>
-          {start >= 0 ? <span className="text-white">{tab.highlight}</span> : null}
-          <span className="text-zinc-400">{after}</span>
-        </p>
-        <Button
-          size="icon-sm"
-          variant="ghost"
-          onClick={copy}
-          aria-label="Copy command"
-          className="size-8 shrink-0 text-zinc-500 hover:text-white"
-        >
-          {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-        </Button>
-      </div>
+      <button
+        type="button"
+        onClick={copyInstall}
+        className={`inline-flex size-8 shrink-0 items-center justify-center rounded-xl border transition-colors ${
+          copied
+            ? "border-[#111]/15 text-[#111]"
+            : "border-[#efefef] text-[#6f6f6f] hover:border-[#e0e0e0] hover:text-[#111]"
+        }`}
+        aria-label={copied ? "Copied" : "Copy"}
+      >
+        <HugeiconsIcon
+          icon={copied ? Tick02Icon : Copy01Icon}
+          size={14}
+          strokeWidth={1.75}
+        />
+      </button>
     </div>
   )
 }

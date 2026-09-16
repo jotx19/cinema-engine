@@ -164,12 +164,17 @@ public final class AudioEngineController {
     }
 
     public func shutdown() {
+        stop(exitProcess: true)
+    }
+
+    public func stop(exitProcess: Bool = false) {
         guard !stopping else { return }
         stopping = true
         statusTimer?.cancel()
         watcher.stop()
         abortEngine()
         let restored = didEngageRouting ? SystemRouting.restore() : nil
+        didEngageRouting = false
         RuntimeControl.clearPid()
         willExit?()
         if quiet {
@@ -180,7 +185,10 @@ public final class AudioEngineController {
             fputs("\nStopped cinema-engine.\n", stdout)
         }
         fflush(stdout)
-        exit(0)
+        if exitProcess {
+            exit(0)
+        }
+        stopping = false
     }
 
     private func rebuildEngine() {

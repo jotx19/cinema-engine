@@ -7,26 +7,25 @@ let package = Package(
         .macOS(.v13)
     ],
     products: [
-        .executable(name: "cinema-engine", targets: ["CinemaEngineCLI"])
-    ],
-    dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.3.0")
+        .executable(name: "CinemaEngine", targets: ["CinemaEngineApp"])
     ],
     targets: [
         .executableTarget(
-            name: "CinemaEngineCLI",
-            dependencies: [
-                "AudioEngine",
-                .product(name: "ArgumentParser", package: "swift-argument-parser")
-            ],
-            path: "Sources/CinemaEngineCLI",
+            name: "CinemaEngineApp",
+            dependencies: ["AudioEngine"],
+            path: "Sources/CinemaEngineApp",
             exclude: ["Info.plist"],
+            resources: [
+                .process("Resources")
+            ],
             linkerSettings: [
+                .linkedFramework("SwiftUI"),
+                .linkedFramework("AppKit"),
                 .unsafeFlags([
                     "-Xlinker", "-sectcreate",
                     "-Xlinker", "__TEXT",
                     "-Xlinker", "__info_plist",
-                    "-Xlinker", "Sources/CinemaEngineCLI/Info.plist"
+                    "-Xlinker", "Sources/CinemaEngineApp/Info.plist"
                 ])
             ]
         ),

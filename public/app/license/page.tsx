@@ -29,7 +29,7 @@ export default function LicensePage() {
       </p>
       <p>
         Full text:{" "}
-        <a className="text-white underline" href="https://github.com/jotx19/cinema-engine/blob/main/LICENSE">
+        <a className="text-[#111] underline" href="https://github.com/jotx19/cinema-engine/blob/main/LICENSE">
           LICENSE
         </a>{" "}
         in the repository.

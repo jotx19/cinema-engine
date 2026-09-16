@@ -8,7 +8,7 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "Cinema Engine",
   description:
-    "Cinema sound for streaming or any other Mac audio output. Terminal mixer for AirPods.",
+    "Theatre sound for your streaming app and headphones. Menu bar cinema mix for AirPods.",
   icons: {
     icon: [{ url: "/brand/logo.png", type: "image/png" }],
     apple: [{ url: "/brand/logo.png" }],
@@ -21,8 +21,8 @@ export default function RootLayout({
   children: ReactNode
 }>) {
   return (
-    <html lang="en" className="dark h-full antialiased">
-      <body className="min-h-full bg-black font-sans text-zinc-100">{children}
+    <html lang="en" className="h-full antialiased">
+      <body className="min-h-full bg-[#f5f5f5] font-sans text-[#111]">{children}
         <Toaster />
       </body>
     </html>
